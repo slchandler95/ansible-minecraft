@@ -1,0 +1,29 @@
+---
+
+# Download link for Java JDK 8u312 that works with Vault Hunters
+java_url: https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u312-b07/OpenJDK8U-jre_x64_linux_hotspot_8u312b07.tar.gz
+skip_java: yes
+
+# Minecraft directories
+minecraft_base: /opt/minecraft
+minecraft_backups: /opt/minecraft/backups
+minecraft_server: /opt/minecraft/server
+minecraft_scripts: /opt/minecraft/scripts
+minecraft_temp: /opt/minecraft/temp
+skip_minecraft: yes
+
+# Forge variables and Forge url: https://files.minecraftforge.net/net/minecraftforge/forge/
+minecraft_version: "1.16.5"
+forge_version: "36.2.23"
+forge_checksum: "md5:8bd6aa68b6337f8495dddf32a9d40238"
+skip_forge: yes
+
+# ModPack variables and ModPack url: https://www.curseforge.com/minecraft/modpacks/vault-hunters-official-modpack
+pack_name: "Vault-Hunters"
+pack_url: https://mediafiles.forgecdn.net/files/3998/439/Vault+Hunters+-+Official+Modpack-1.13.9L.zip
+pack_version: "1.13.9L"
+pack_checksum: "md5:17c549b1f5397d5fc98cdeb7217eae10"
+
+json: "{{ minecraft_temp }}/{{ pack_name }}-{{ pack_version }}/manifest.json"
+manifest: "{{ lookup('file', json) | from_json }}"
+skip_mods: yes

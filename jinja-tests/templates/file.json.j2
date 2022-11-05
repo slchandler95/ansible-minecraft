@@ -1,0 +1,5 @@
+{"records": [
+{% for i in sites %}
+{"name": "{{ i }}"}{{ "," if not loop.last }}
+{% endfor %}
+]}

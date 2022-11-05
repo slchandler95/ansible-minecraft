@@ -1,0 +1,25 @@
+---
+
+- name: Update repository cache
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Update all packages
+  ansible.builtin.apt:
+    name: "*"
+    state: latest
+
+- name: Install required packages
+  ansible.builtin.apt:
+    name:
+      - wget
+      - curl
+      - unzip
+      - tar
+      - tmux
+    state: latest
+
+- name: Allow port 25565
+  community.general.ufw:
+    rule: allow
+    port: 25565

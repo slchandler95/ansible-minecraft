@@ -1,0 +1,50 @@
+allow_flight: true
+allow_nether: true
+broadcast_console_to_ops: true
+broadcast_rcon_to_ops: true
+difficulty: hard
+enable_command_block: true
+enable_jmx_monitoring: false
+enable_query: true
+enable_rcon: false
+enable_status: true
+enforce_whitelist: true
+entity_broadcast_range_percentage: 100
+force_gamemode: true
+function_permission_level: 2
+gamemode: survival
+generate_structures: true
+generator_settings:
+hardcore: false
+level_name: Vault-Hunters
+level_seed:
+level_type: byg
+max_build_height: 256
+max_players: 5
+max_tick_time: 300000
+max_world_size: 29999984
+motd: \u00A74------ \u00A7fVault Pointe Season 1 \u00A74------\u00A7r\n             \u00A74------  \u00A72v1.13.9L \u00A74------
+network_compression_threshold: 256
+online_mode: true
+op_permission_level: 4
+player_idle_timeout: 0
+prevent_proxy_connections: false
+pvp: false
+query_port: 25565
+rate_limit: 0
+rcon_password:
+rcon_port: 25575
+resource_pack:
+resource_pack_sha1:
+server_ip:
+server_port: 25565
+snooper_enabled: false
+spawn_animals: true
+spawn_monsters: true
+spawn_npcs: true
+spawn_protection: 0
+sync_chunk_writes: true
+text_filtering_config:
+use_native_transport: true
+view_distance: 10
+white_list: true

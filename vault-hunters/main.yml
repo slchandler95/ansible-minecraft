@@ -1,0 +1,38 @@
+---
+
+- name: Install Vault Hunters minecraft server
+
+  become: yes
+  become_method: sudo
+  become_user: root
+
+  hosts: localhost
+
+  tasks:
+    - include_vars: vars/vars_main.yml
+    - include_vars: vars/server.properties.yml
+    - include_vars: vars/whitelist.json.yml
+    - include_vars: vars/java.yml
+    
+    - name: Update packages
+      include_tasks: tasks/update_packages.yml
+
+    - name: Java config
+      include_tasks: tasks/java_config.yml
+      when: not skip_java
+      
+    - name : Minecraft config
+      include_tasks: tasks/minecraft_config.yml
+      when: not skip_minecraft
+
+    - name: Forge config
+      include_tasks: tasks/forge_config.yml
+      when: not skip_forge
+
+    - name: Mod config
+      include_tasks: tasks/mod_config.yml
+      loop: "{{ manifest.files }}"
+      when: not skip_mods
+
+    - name: Server config
+      include_tasks: tasks/server_config.yml

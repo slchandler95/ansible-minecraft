@@ -1,0 +1,19 @@
+---
+
+- name: Create java directory
+  ansible.builtin.file:
+    path: /usr/local/java
+    state: directory
+
+- name: Download java 8u312 tarball and unpack
+  ansible.builtin.unarchive:
+    src: "{{ java_url }}"
+    dest: /usr/local/java
+    remote_src: yes
+
+- name: Update alternatives for java
+  community.general.alternatives:
+    name: java
+    link: /usr/bin/java
+    path: /usr/local/java/jdk8u312-b07-jre/bin/java
+    state: selected

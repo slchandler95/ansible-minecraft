@@ -1,0 +1,4 @@
+java_Xms: 12G
+java_Xmx: 16G
+java_flags:
+server_jar: forge-1.16.5-36.2.23.jar
