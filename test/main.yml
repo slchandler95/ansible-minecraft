@@ -1,0 +1,15 @@
+---
+
+- name: Vault Hunters testing
+
+  become: yes
+  become_method: sudo
+  become_user: root
+
+  hosts: localhost
+
+  tasks:
+    - include_vars: vars/main.yml
+
+    - name: Minecraft server download
+      include_tasks: tasks/debian.yml

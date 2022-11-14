@@ -1,0 +1,13 @@
+---
+
+# Include variables and define needed variables
+- name: Include OS-specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Define packages to install
+  ansible.builtin.set_fact:
+    packages: "{{ __packages | list }}"
+  when: packages is not defined
+
+# Include update/install tasks
+- include_tasks: "{{ ansible_os_family }}.yml"

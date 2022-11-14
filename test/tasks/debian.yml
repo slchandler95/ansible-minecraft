@@ -1,0 +1,65 @@
+---
+
+- name: Create minecraft directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "{{ minecraft_base }}"
+    - "{{ minecraft_backups }}"
+    - "{{ minecraft_server }}"
+    - "{{ minecraft_scripts }}"
+    - "{{ minecraft_tmp }}"
+
+- name: retrieve version manifest
+  ansible.builtin.uri:
+    url: "{{ minecraft_version_manifest_url }}"
+    body_format: json
+    return_content: true
+  register: version_manifest
+
+- name: version manifest debug
+  debug:
+    msg: "{{ version_manifest }}"
+
+- name: json debug
+  debug:
+    msg: "{{ json }}"
+
+- name: get latest version
+  set_fact:
+    minecraft_version_latest: "{{ (version_manifest.content | from_json).latest.release }}"
+
+- name: debug latest version
+  debug:
+    msg: "{{ minecraft_version_latest }}"
+
+- name: get latest version url
+  set_fact:
+    minecraft_version_latest_url: "{{ version_manifest.content | from_json | json_query(query) }}"
+  vars:
+    query: "versions[?id=='1.19.2'].url"
+
+- name: debug latest version url
+  debug:
+    msg: "{{ minecraft_version_latest_url }}"
+
+- name: get latest version download url
+  ansible.builtin.uri:
+    url: "{{ minecraft_version_latest_url }}"
+    return_content: true
+  register: download_url
+
+- name: debug download_url
+  debug:
+    msg: "{{ download_url }}"
+
+- name: get latest version download url
+  set_fact:
+    url: "{{ download_url.content | from_json).downloads.server.url }}"
+
+- name: download latest version
+  ansible.builtin.get_url:
+    url: "{{ url }}"
+    dest: "{{ minecraft_server }}"
+    checksum: "sha1:{{ download_url.content | from_json).downloads.server.sha1 }}"

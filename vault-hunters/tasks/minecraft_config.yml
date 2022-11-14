@@ -25,16 +25,16 @@
     - "{{ minecraft_scripts }}"
     - "{{ minecraft_temp }}"
 
+- name: Create Vault Hunters ModPack directory
+  ansible.builtin.file:
+    path: "{{ minecraft_temp }}/{{ pack_name }}-{{ pack_version }}"
+    state: directory
+
 - name: Download Vault Hunters ModPack
   ansible.builtin.get_url:
     url: "{{ pack_url }}"
     dest: "{{ minecraft_temp }}/{{ pack_name }}-{{ pack_version }}.zip"
     checksum: "{{ pack_checksum }}"
-
-- name: Create Vault Hunters ModPack directory
-  ansible.builtin.file:
-    path: "{{ minecraft_temp }}/{{ pack_name }}-{{ pack_version }}"
-    state: directory
 
 - name: Extract Vault Hunters ModPack
   ansible.builtin.unarchive:

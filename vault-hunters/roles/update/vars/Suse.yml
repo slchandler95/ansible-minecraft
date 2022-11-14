@@ -1,0 +1,8 @@
+---
+
+__packages:
+  - wget
+  - curl
+  - unzip
+  - tar
+  - tmux

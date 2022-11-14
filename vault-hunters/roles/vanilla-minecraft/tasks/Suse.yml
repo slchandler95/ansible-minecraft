@@ -1,0 +1,25 @@
+---
+
+- name: Create minecraft group
+  ansible.builtin.group:
+    name: minecraft
+    state: present
+
+- name: Create minecraft user
+  ansible.builtin.user:
+    name: minecraft
+    group: minecraft
+    shell: /bin/bash
+    system: yes
+    state: present
+
+- name: Create minecraft directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "{{ minecraft_base }}"
+    - "{{ minecraft_backups }}"
+    - "{{ minecraft_server }}"
+    - "{{ minecraft_scripts }}"
+    - "{{ minecraft_tmp }}"

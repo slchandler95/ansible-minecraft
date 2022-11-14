@@ -1,0 +1,15 @@
+---
+
+- name: Update rpm cache
+  community.general.zypper:
+    update_cache: yes
+
+- name: Update all packages
+  community.general.zypper:
+    name: "*"
+    state: latest
+
+- name: Install required packages
+  community.general.zypper:
+    name: "{{ packages }}"
+    state: latest
