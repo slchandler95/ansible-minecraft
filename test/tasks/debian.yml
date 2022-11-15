@@ -21,9 +21,9 @@
   debug:
     msg: "{{ version_manifest }}"
 
-- name: json debug
+- name: version manifest debug 2
   debug:
-    msg: "{{ json }}"
+    msg: "{{ version_manifest.latest.release }}"
 
 - name: get latest version
   set_fact:
