@@ -15,7 +15,6 @@
   ansible.builtin.uri:
     url: "{{ minecraft_version_manifest_url }}"
     body_format: json
-    return_content: true
   register: version_manifest
 
 - name: version manifest debug
