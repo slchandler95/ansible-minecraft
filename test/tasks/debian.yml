@@ -23,7 +23,7 @@
 
 - name: version manifest debug 2
   debug:
-    msg: "{{ version_manifest.latest.release }}"
+    msg: "{{ version_manifest.json.latest.release }}"
 
 - name: get latest version
   set_fact:
