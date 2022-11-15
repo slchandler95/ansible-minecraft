@@ -33,7 +33,7 @@
   set_fact:
     minecraft_version_latest_url: "{{ version_manifest.json | json_query(query) }}"
   vars:
-    query: "versions[?id=='{{ minecraft_version_latest }}'].url | [0]"
+    query: "versions[?id=='{{ minecraft_version_latest }}'].url[0]"
 
 - name: debug latest version url
   debug:
