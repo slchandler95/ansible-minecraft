@@ -20,7 +20,7 @@
 - name: get latest version
   set_fact:
     minecraft_version: "{{ minecraft_version_manifest.json.latest.release }}"
-  when: minecraft_latest is true
+  when: minecraft_latest
 
 - name: get version url
   set_fact:
