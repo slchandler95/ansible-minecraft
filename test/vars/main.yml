@@ -10,4 +10,4 @@ minecraft_tmp: /opt/minecraft/tmp
 minecraft_version_manifest_url: "https://launchermeta.mojang.com/mc/game/version_manifest.json"
 
 minecraft_latest: false
-minecraft_version: 
+minecraft_version: "1.16.5"
