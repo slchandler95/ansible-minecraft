@@ -12,4 +12,4 @@
     - include_vars: vars/main.yml
 
     - name: Minecraft server download
-      include_tasks: tasks/debian.yml
+      include_tasks: tasks/devel.yml
