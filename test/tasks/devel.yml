@@ -1,0 +1,41 @@
+---
+
+- name: Create minecraft directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "{{ minecraft_base }}"
+    - "{{ minecraft_backups }}"
+    - "{{ minecraft_server }}"
+    - "{{ minecraft_scripts }}"
+    - "{{ minecraft_tmp }}"
+
+- name: get version manifest
+  ansible.builtin.uri:
+    url: "{{ minecraft_version_manifest_url }}"
+    body_format: json
+  register: minecraft_version_manifest
+
+- name: get latest version
+  set_fact:
+    minecraft_version: "{{ minecraft_version_manifest.json.latest.release }}"
+  when: minecraft_latest is true
+
+- name: get version url
+  set_fact:
+    minecraft_version_url: "{{ minecraft_version_manifest.json | json_query(query) }}"
+  vars:
+    query: "versions[?id=='{{ minecraft_version }}'].url | [0]"
+
+- name: get version download url
+  ansible.builtin.uri:
+    url: "{{ minecraft_version_url }}"
+    body_format: json
+  register: download_url
+
+- name: download version
+  ansible.builtin.get_url:
+    url: "{{ download_url.json.downloads.server.url }}"
+    dest: "{{ minecraft_server }}/minecraft_server.{{ minecraft_version }}.jar"
+    checksum: "sha1:{{ download_url.json.downloads.server.sha1 }}"

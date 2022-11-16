@@ -8,3 +8,6 @@ minecraft_scripts: /opt/minecraft/scripts
 minecraft_tmp: /opt/minecraft/tmp
 
 minecraft_version_manifest_url: "https://launchermeta.mojang.com/mc/game/version_manifest.json"
+
+minecraft_version: 
+minecraft_latest: true
