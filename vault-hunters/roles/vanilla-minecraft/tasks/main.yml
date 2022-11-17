@@ -4,7 +4,7 @@
   include_vars: vars/main.yml
 
 - name: Include setup tasks
-- include_tasks: tasks/setup.yml
+- include_tasks: setup.yml
 
 - name: Include download tasks
-- include_tasks: tasks/download.yml
+- include_tasks: download.yml
