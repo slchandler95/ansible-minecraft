@@ -8,8 +8,5 @@
 
   hosts: localhost
 
-  tasks:
-    - include_vars: vars/main.yml
-
-    - name: Minecraft server download
-      include_tasks: tasks/devel.yml
+  roles:
+    - role: vanilla-minecraft
