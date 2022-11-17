@@ -7,12 +7,12 @@
   register: minecraft_version_manifest
 
 - name: Get latest release version
-  set_fact:
+  ansible.builtin.set_fact:
     minecraft_version: "{{ minecraft_version_manifest.json.latest.release }}"
   when: minecraft_latest
 
 - name: Get minecraft {{ minecraft_version }} manifest url
-  set_fact:
+  ansible.builtin.set_fact:
     minecraft_version_url: "{{ minecraft_version_manifest.json | json_query(query) }}"
   vars:
     query: "versions[?id=='{{ minecraft_version }}'].url | [0]"
