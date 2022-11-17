@@ -13,4 +13,4 @@ minecraft_version_manifest_url: "https://launchermeta.mojang.com/mc/game/version
 # True/False to download latest release version of Minecraft
 minecraft_latest: true
 # Set to download specific version of Minecraft
-minecraft_version:
+#minecraft_version:
