@@ -1,16 +1,5 @@
 ---
 
-- name: Create minecraft directories
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-  loop:
-    - "{{ minecraft_base }}"
-    - "{{ minecraft_backups }}"
-    - "{{ minecraft_server }}"
-    - "{{ minecraft_scripts }}"
-    - "{{ minecraft_tmp }}"
-
 - name: Get minecraft version manifest
   ansible.builtin.uri:
     url: "{{ minecraft_version_manifest_url }}"

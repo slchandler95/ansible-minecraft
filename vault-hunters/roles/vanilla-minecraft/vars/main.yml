@@ -7,5 +7,10 @@ minecraft_server: /opt/minecraft/server
 minecraft_scripts: /opt/minecraft/scripts
 minecraft_tmp: /opt/minecraft/tmp
 
-
+# Minecraft version manifest
 minecraft_version_manifest_url: "https://launchermeta.mojang.com/mc/game/version_manifest.json"
+
+# True/False to download latest release version of Minecraft
+minecraft_latest: true
+# Set to download specific version of Minecraft
+minecraft_version: 

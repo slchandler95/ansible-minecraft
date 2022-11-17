@@ -1,13 +1,10 @@
 ---
 
-# Include variables and define needed variables
-- name: Include OS-specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
+- name: Include Minecraft variables
+  include_vars: vars/main.yml
 
-- name: Define apache_packages.
-  set_fact:
-    apache_packages: "{{ __apache_packages | list }}"
-  when: apache_packages is not defined
+- name: Include setup tasks
+- include_tasks: tasks/setup.yml
 
-# Setup/install tasks
-- include_tasks: "setup-{{ ansible_os_family }}.yml"
+- name: Include download tasks
+- include_tasks: tasks/download.yml
