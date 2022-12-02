@@ -6,3 +6,4 @@ __packages:
   - unzip
   - tar
   - tmux
+  - openjdk-17-jre-headless

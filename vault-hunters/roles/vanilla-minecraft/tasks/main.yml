@@ -1,10 +1,7 @@
 ---
 
-- name: Include Minecraft variables
+- name: Include minecraft variables
   include_vars: main.yml
 
-- name: Include setup tasks
-  include_tasks: setup.yml
-
-- name: Include download tasks
-  include_tasks: download.yml
+- name: Include OS-specific tasks
+  include_tasks: "{{ ansible_os_family }}.yml"
