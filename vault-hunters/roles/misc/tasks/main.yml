@@ -1,0 +1,53 @@
+---
+
+- name: Include any variables
+  include_vars: main.yml
+
+- name: Create minecraft group
+  ansible.builtin.group:
+    name: minecraft
+    state: present
+
+- name: Create minecraft user
+  ansible.builtin.user:
+    name: minecraft
+    group: minecraft
+    shell: /bin/bash
+    system: yes
+    state: present
+
+- name: Create minecraft directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "{{ minecraft_base }}"
+    - "{{ minecraft_backups }}"
+    - "{{ minecraft_server }}"
+    - "{{ minecraft_scripts }}"
+    - "{{ minecraft_tmp }}"
+
+- name: Open port 25565 for Debian distros
+  community.general.ufw:
+    rule: allow
+    port: 25565
+    state: enabled
+  when: ansible_os_family == "Debian"
+
+- name: Open port 25565 for RedHat distros
+  ansible.posix.firewalld:
+    zone: public
+    port: "{{ item }}"
+    immediate: true
+    permanent: true
+    state: enabled
+  loop:
+    - "25565/tcp"
+    - "25565/udp"
+  when: ansible_os_family == "RedHat"
+
+- name: Open port 25565 for Suse distros
+  ansible.builtin.command: |
+    firewall-cmd --permanent --zone=public --add-port=25565/tcp
+    firewall-cmd --permanent --zone=public --add-port=25565/udp
+  when: ansible_os_family == "Suse"

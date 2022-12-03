@@ -1,15 +1,5 @@
 ---
 
-# Minecraft directories
-minecraft_base: /opt/minecraft
-minecraft_backups: /opt/minecraft/backups
-minecraft_server: /opt/minecraft/server
-minecraft_scripts: /opt/minecraft/scripts
-minecraft_tmp: /opt/minecraft/tmp
-
-# Minecraft version manifest
-minecraft_version_manifest_url: "https://launchermeta.mojang.com/mc/game/version_manifest.json"
-
 # True to download latest release version of Minecraft, False to download specific version of Minecraft
 minecraft_latest: true
 # Set specific version of Minecraft you want to download

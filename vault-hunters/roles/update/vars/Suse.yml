@@ -6,4 +6,5 @@ __packages:
   - unzip
   - tar
   - tmux
+  - firewalld
   - java-17-openjdk-headless
