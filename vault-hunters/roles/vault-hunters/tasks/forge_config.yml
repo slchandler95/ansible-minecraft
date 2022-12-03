@@ -11,7 +11,7 @@
     cmd: "java -jar forge-{{ minecraft_version }}-{{ forge_version }}-installer.jar --installServer"
     chdir: "{{ minecraft_server }}"
 
-- name: Remove forge installer
-  ansible.builtin.file:
-    path: "{{ minecraft_server }}/forge-{{ minecraft_version }}-{{ forge_version }}-installer.jar"
-    state: absent
+#- name: Remove forge installer
+#  ansible.builtin.file:
+#    path: "{{ minecraft_server }}/forge-{{ minecraft_version }}-{{ forge_version }}-installer.jar"
+#    state: absent

@@ -49,4 +49,3 @@
     - "overrides/config"
     - "overrides/defaultconfigs"
     - "overrides/scripts"
-  when: false
