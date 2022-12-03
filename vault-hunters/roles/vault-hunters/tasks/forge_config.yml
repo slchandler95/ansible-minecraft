@@ -10,6 +10,7 @@
   ansible.builtin.command:
     cmd: "java -jar forge-{{ minecraft_version }}-{{ forge_version }}-installer.jar --installServer"
     chdir: "{{ minecraft_server }}"
+    creates: forge-{{ minecraft_version }}-{{ forge_version }}-installer.jar.log
 
 #- name: Remove forge installer
 #  ansible.builtin.file:

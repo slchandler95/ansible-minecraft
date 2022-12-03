@@ -13,7 +13,7 @@
 
   - name: Download mod {{ data.json.data.fileName }}
     ansible.builtin.get_url:
-      url: "{{ data.json.data.downloadUrl }}"
+      url: "{{ data.json.data.downloadUrl | quote }}"
       #dest: "{{ minecraft_server }}/mods"
       dest: "{{ minecraft_server }}/mods/{{ data.json.data.fileName }}"
       checksum: "md5:{{ data.json.data.hashes[1].value }}"
