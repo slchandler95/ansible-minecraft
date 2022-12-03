@@ -1,11 +1,5 @@
 ---
 
-- name: Download spark mod
-  ansible.builtin.get_url:
-    url: "https://media.forgecdn.net/files/3824/951/spark-1.9.11-forge.jar"
-    dest: "{{ minecraft_server }}/mods"
-    checksum: "md5:5b0c24269a9c89c96ae32e52455a44c1"
-
 - name: Create server.properties from template
   ansible.builtin.template:
     src: server.properties.j2
