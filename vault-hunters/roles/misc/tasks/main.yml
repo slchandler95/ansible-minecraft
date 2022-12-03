@@ -24,6 +24,7 @@
     - "{{ minecraft_base }}"
     - "{{ minecraft_backups }}"
     - "{{ minecraft_server }}"
+    - "{{ minecraft_server }}/mods"
     - "{{ minecraft_scripts }}"
     - "{{ minecraft_tmp }}"
 
