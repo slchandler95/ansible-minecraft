@@ -17,7 +17,6 @@
       dest: "{{ minecraft_server }}/mods"
       #dest: "{{ minecraft_server }}/mods/{{ data.json.data.fileName }}"
       checksum: "md5:{{ data.json.data.hashes[1].value }}"
-    ignore_errors: true
 
   rescue:
  
