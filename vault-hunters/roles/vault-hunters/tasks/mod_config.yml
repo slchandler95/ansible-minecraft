@@ -13,17 +13,18 @@
 
   - name: Download mod {{ data.json.data.fileName }}
     ansible.builtin.get_url:
-      url: "{{ data.json.data.downloadUrl | quote }}"
-      #dest: "{{ minecraft_server }}/mods"
-      dest: "{{ minecraft_server }}/mods/{{ data.json.data.fileName }}"
+      url: "{{ data.json.data.downloadUrl }}"
+      dest: "{{ minecraft_server }}/mods"
+      #dest: "{{ minecraft_server }}/mods/{{ data.json.data.fileName }}"
       checksum: "md5:{{ data.json.data.hashes[1].value }}"
-  ignore_errors: true
+    ignore_errors: true
 
   rescue:
  
     - name: Rescue download mod {{ data.json.data.fileName }}
       ansible.builtin.get_url:
         url: "https://media.forgecdn.net/files/{{ data.json.data.id | regex_search('^\\d\\d\\d\\d') }}/{{ data.json.data.id | regex_search('\\d\\d\\d$') }}/{{ data.json.data.fileName }}"
-        #dest: "{{ minecraft_server }}/mods"
-        dest: "{{ minecraft_server }}/mods/{{ data.json.data.fileName }}"
+        dest: "{{ minecraft_server }}/mods"
+        #dest: "{{ minecraft_server }}/mods/{{ data.json.data.fileName }}"
         checksum: "md5:{{ data.json.data.hashes[1].value }}"
+      ignore_errors: true
