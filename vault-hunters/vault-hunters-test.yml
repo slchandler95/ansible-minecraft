@@ -9,6 +9,6 @@
   hosts: localhost
 
   roles:
-    #- role: update
+    - role: update
     - role: misc
     - role: vault-hunters
