@@ -12,7 +12,6 @@
 - name: Include mod config tasks
   include_tasks: mod_config.yml
   loop: "{{ manifest.files }}"
-  #when: false
 
 - name: Include server config tasks
   include_tasks: server_config.yml
