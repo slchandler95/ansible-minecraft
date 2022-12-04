@@ -5,10 +5,15 @@ minecraft_version: "1.18.2"
 forge_version: "40.1.61"
 forge_checksum: "md5:3d46421a908b4c3f3e990c2c4410b045"
 
-# ModPack variables and ModPack url: https://www.curseforge.com/minecraft/modpacks/vault-hunters-official-modpack
+# ModPack variables and ModPack url: https://www.curseforge.com/minecraft/modpacks/vault-hunters-1-18-2
 pack_name: "Vault Hunters - 1.18.2"
 pack_url: https://mediafilez.forgecdn.net/files/4119/164/Vault+Hunters+-+1.18.2-alpha-0.0.1.zip
 pack_version: "alpha-0.0.1"
 pack_checksum: "md5:ccdc6daf827b95dfb9c355eab3f984fe"
 pack_manifest: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}/manifest.json"
 manifest: "{{ lookup('file', pack_manifest) | from_json }}"
+
+# Java flags
+java_Xms: 12G
+java_Xmx: 16G
+java_flags: -XX:+UseG1GC -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M

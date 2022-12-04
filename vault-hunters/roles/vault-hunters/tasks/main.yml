@@ -1,6 +1,5 @@
 ---
 
-- include_vars: java.yml
 - include_vars: server.properties.yml
 - include_vars: whitelist.json.yml
   
