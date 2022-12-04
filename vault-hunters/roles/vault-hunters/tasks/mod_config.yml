@@ -22,6 +22,6 @@
     - name: Rescue download mod {{ data.json.data.fileName }}
       ansible.builtin.get_url:
         url: "https://media.forgecdn.net/files/{{ data.json.data.id | regex_search('^\\d\\d\\d\\d') | int }}/{{ data.json.data.id | regex_search('\\d\\d\\d$') | int }}/{{ data.json.data.fileName | urlencode }}"
-        dest: "{{ minecraft_server }}/mods"
+        dest: "{{ minecraft_server }}/mods/{{ data.json.data.fileName }}"
         checksum: "md5:{{ data.json.data.hashes[1].value }}"
       ignore_errors: true
