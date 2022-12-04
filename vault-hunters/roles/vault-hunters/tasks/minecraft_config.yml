@@ -16,11 +16,20 @@
     src: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}.zip"
     dest: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}"
 
-- name: Copy necessary ModPack directories
-  ansible.builtin.copy:
+#- name: Copy necessary ModPack directories with copy
+#  ansible.builtin.copy:
+#    src: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}/{{ item }}"
+#    dest: "{{ minecraft_server }}"
+#    force: no
+#  loop:
+#    - "overrides/config"
+#    - "overrides/defaultconfigs"
+#    - "overrides/scripts"
+
+- name: Copy necessary ModPack directories with synchronize
+  ansible.posix.synchronize:
     src: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}/{{ item }}"
     dest: "{{ minecraft_server }}"
-    force: no
   loop:
     - "overrides/config"
     - "overrides/defaultconfigs"
