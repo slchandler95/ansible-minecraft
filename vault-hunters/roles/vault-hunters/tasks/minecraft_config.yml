@@ -20,8 +20,8 @@
   ansible.builtin.copy:
     src: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}/{{ item }}"
     dest: "{{ minecraft_server }}"
+    force: no
   loop:
     - "overrides/config"
     - "overrides/defaultconfigs"
     - "overrides/scripts"
-  when: false
