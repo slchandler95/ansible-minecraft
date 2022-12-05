@@ -2,12 +2,12 @@
 
 - name: Create server.properties from template
   ansible.builtin.template:
-    src: server.properties.j2
+    src: "server.properties.j2"
     dest: "{{ minecraft_server }}/server.properties"
 
 - name: Create user_jvm_args.txt from template
   ansible.builtin.template:
-    src: user_jvm_args.txt.j2
+    src: "user_jvm_args.txt.j2"
     dest: "{{ minecraft_server }}/user_jvm_args.txt"
 
 - name: Create whitelist.json
