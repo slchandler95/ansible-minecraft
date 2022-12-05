@@ -1,0 +1,29 @@
+---
+
+- name: Create server.properties from template
+  ansible.builtin.template:
+    src: "server.properties.j2"
+    dest: "{{ minecraft_server }}/server.properties"
+
+- name: Create user_jvm_args.txt from template
+  ansible.builtin.template:
+    src: "user_jvm_args.txt.j2"
+    dest: "{{ minecraft_server }}/user_jvm_args.txt"
+
+- name: Create whitelist.json
+  ansible.builtin.copy:
+    content: "{{ whitelist | to_nice_json }}"
+    dest: "{{ minecraft_server }}/whitelist.json"
+
+- name: Create eula.txt
+  ansible.builtin.copy:
+    content: "eula=true"
+    dest: "{{ minecraft_server }}/eula.txt"
+
+- name: Create run.sh
+  ansible.builtin.copy:
+    content: |
+      #!/usr/bin/env sh
+      java @user_jvm_args.txt @libraries/net/minecraftforge/forge/1.18.2-40.1.61/unix_args.txt nogui "$@"
+    dest: "{{ minecraft_server }}/run.sh"
+    mode: "a+x"
