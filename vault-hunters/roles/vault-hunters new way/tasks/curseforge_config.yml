@@ -25,7 +25,7 @@
 
   - name: Download latest ModPack 1
     ansible.builtin.get_url:
-      url: "{{ curseforge_project.json.data[0].downloadUrl | urlencode }}"
+      url: "{{ curseforge_project.json.data[0].downloadUrl | regex_replace(' ', '+') }}"
       dest: "{{ minecraft_server }}"
       checksum: "md5:{{ curseforge_project.json.data[0].hashes[1].value }}"
     ignore_errors: true
