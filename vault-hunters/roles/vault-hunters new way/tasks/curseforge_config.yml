@@ -60,5 +60,5 @@
     ansible.builtin.get_url:
       url: "{{ server_pack_url.json.data.downloadUrl | regex_replace(' ', '%20') }}"
       dest: "{{ minecraft_server }}"
-      checksum: "md5:{{ curseforge_project.json.data.hashes[1].value }}"
+      checksum: "md5:{{ server_pack_url.json.data.hashes[1].value }}"
     ignore_errors: true
