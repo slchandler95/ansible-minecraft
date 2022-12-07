@@ -37,6 +37,11 @@
       checksum: "md5:{{ curseforge_project.json.data[1].hashes[1].value }}"
     ignore_errors: true
 
+  - debug:
+      msg: "https://api.curseforge.com/v1/mods/{{ project_id }}/files/{{ server_pack }}"
+
+
+
   - name: Get server pack url
     ansible.builtin.uri:
       url: "https://api.curseforge.com/v1/mods/{{ project_id }}/files/{{ server_pack }}"
@@ -46,6 +51,10 @@
         x-api-key: "{{ curseforge_api_key }}"
     register: server_pack_url
     ignore_errors: true
+
+  - debug:
+      msg: "{{ server_pack_url }}"
+
 
   - name: Download latest ServerPack
     ansible.builtin.get_url:
