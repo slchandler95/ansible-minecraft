@@ -1,0 +1,36 @@
+---
+
+- name: Create Vault Hunters ModPack directory
+  ansible.builtin.file:
+    path: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}"
+    state: directory
+
+- name: Download Vault Hunters ModPack
+  ansible.builtin.get_url:
+    url: "{{ pack_url }}"
+    dest: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}.zip"
+    checksum: "{{ pack_checksum }}"
+
+- name: Extract Vault Hunters ModPack
+  ansible.builtin.unarchive:
+    src: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}.zip"
+    dest: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}"
+
+#- name: Copy necessary ModPack directories with copy
+#  ansible.builtin.copy:
+#    src: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}/{{ item }}"
+#    dest: "{{ minecraft_server }}"
+#    force: no
+#  loop:
+#    - "overrides/config"
+#    - "overrides/defaultconfigs"
+#    - "overrides/scripts"
+
+- name: Copy necessary ModPack directories with synchronize
+  ansible.posix.synchronize:
+    src: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}/{{ item }}"
+    dest: "{{ minecraft_server }}"
+  loop:
+    - "overrides/config"
+    - "overrides/defaultconfigs"
+    - "overrides/scripts"

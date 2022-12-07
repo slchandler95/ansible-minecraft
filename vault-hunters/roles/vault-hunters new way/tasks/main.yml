@@ -1,0 +1,4 @@
+---
+
+- name: Include curseforge_config tasks
+  include_tasks: curseforge_config.yml

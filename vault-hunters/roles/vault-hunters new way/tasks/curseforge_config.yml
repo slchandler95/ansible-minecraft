@@ -1,0 +1,38 @@
+---
+
+  - name: Get project info
+    ansible.builtin.uri:
+      url: "https://api.curseforge.com/v1/mods/{{ project_id }}/files"
+      method: "GET"
+      headers:
+        Content-Type: "application/json"
+        x-api-key: "{{ curseforge_api_key }}"
+    register: curseforge_project
+    ignore_errors: true
+
+  - debug:
+      msg: "{{ curseforge_project }}"
+
+  - name: Get curseforge server pack file id
+    ansible.builtin.set_fact:
+      server_pack: "{{ curseforge_project.json | json_query(query) }}"
+    vars:
+      query: "data[?serverPackFileId].serverPackFileId"
+    ignore_errors: true
+
+  - debug:
+      msg: "{{ server_pack }}"
+
+  - name: Download latest ModPack 1
+    ansible.builtin.get_url:
+      url: "{{ curseforge_project.json.data[0].downloadUrl }}"
+      dest: "{{ minecraft_server }}/mods"
+      checksum: "md5:{{ curseforge_project.json.data[0].hashes[1].value }}"
+    ignore_errors: true
+
+  - name: Download latest ModPack 2
+    ansible.builtin.get_url:
+      url: "{{ curseforge_project.json.data[1].downloadUrl }}"
+      dest: "{{ minecraft_server }}/mods"
+      checksum: "md5:{{ curseforge_project.json.data[1].hashes[1].value }}"
+    ignore_errors: true

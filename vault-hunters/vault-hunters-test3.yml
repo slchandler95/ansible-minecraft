@@ -1,0 +1,12 @@
+---
+
+- name: Install Vault Hunters minecraft server
+
+  become: yes
+  become_method: sudo
+  become_user: root
+
+  hosts: localhost
+
+  roles:
+    - role: vault-hunters new way 
