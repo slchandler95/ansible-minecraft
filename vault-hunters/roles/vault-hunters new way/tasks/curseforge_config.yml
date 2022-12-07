@@ -17,7 +17,7 @@
     ansible.builtin.set_fact:
       server_pack: "{{ curseforge_project.json | json_query(query) }}"
     vars:
-      query: "data[?serverPackFileId].serverPackFileId"
+      query: "data[?serverPackFileId].serverPackFileId | [0]"
     ignore_errors: true
 
   - debug:
