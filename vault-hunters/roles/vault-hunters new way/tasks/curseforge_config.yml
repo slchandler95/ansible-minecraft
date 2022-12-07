@@ -26,13 +26,13 @@
   - name: Download latest ModPack 1
     ansible.builtin.get_url:
       url: "{{ curseforge_project.json.data[0].downloadUrl }}"
-      dest: "{{ minecraft_server }}/mods"
+      dest: "{{ minecraft_server }}"
       checksum: "md5:{{ curseforge_project.json.data[0].hashes[1].value }}"
     ignore_errors: true
 
   - name: Download latest ModPack 2
     ansible.builtin.get_url:
       url: "{{ curseforge_project.json.data[1].downloadUrl }}"
-      dest: "{{ minecraft_server }}/mods"
+      dest: "{{ minecraft_server }}"
       checksum: "md5:{{ curseforge_project.json.data[1].hashes[1].value }}"
     ignore_errors: true
