@@ -1,64 +1,49 @@
 ---
 
-  - name: Get project info
+  - name: Get curseforge project info
     ansible.builtin.uri:
       url: "https://api.curseforge.com/v1/mods/{{ project_id }}/files"
       method: "GET"
       headers:
         Content-Type: "application/json"
         x-api-key: "{{ curseforge_api_key }}"
-    register: curseforge_project
+    register: curseforge_project_info
     ignore_errors: true
 
-  - debug:
-      msg: "{{ curseforge_project }}"
-
-  - name: Get curseforge server pack file id
+  - name: Get curseforge ServerPack file id
     ansible.builtin.set_fact:
-      server_pack: "{{ curseforge_project.json | json_query(query) }}"
+      server_pack_id: "{{ curseforge_project_info.json | json_query(query) }}"
     vars:
       query: "data[?serverPackFileId].serverPackFileId | [0]"
     ignore_errors: true
 
-  - debug:
-      msg: "{{ server_pack }}"
-
-  - name: Download latest ModPack 1
-    ansible.builtin.get_url:
-      url: "{{ curseforge_project.json.data[0].downloadUrl | regex_replace(' ', '%20') }}"
-      dest: "{{ minecraft_server }}"
-      checksum: "md5:{{ curseforge_project.json.data[0].hashes[1].value }}"
-    ignore_errors: true
-
-  - name: Download latest ModPack 2
-    ansible.builtin.get_url:
-      url: "{{ curseforge_project.json.data[1].downloadUrl | regex_replace(' ', '%20') }}"
-      dest: "{{ minecraft_server }}"
-      checksum: "md5:{{ curseforge_project.json.data[1].hashes[1].value }}"
-    ignore_errors: true
-
-  - debug:
-      msg: "https://api.curseforge.com/v1/mods/{{ project_id }}/files/{{ server_pack }}"
-
-
-
-  - name: Get server pack url
+  - name: Get curseforge ServerPack info
     ansible.builtin.uri:
-      url: "https://api.curseforge.com/v1/mods/{{ project_id }}/files/{{ server_pack }}"
+      url: "https://api.curseforge.com/v1/mods/{{ project_id }}/files/{{ server_pack_id }}"
       method: "GET"
       headers:
         Content-Type: "application/json"
         x-api-key: "{{ curseforge_api_key }}"
-    register: server_pack_url
+    register: server_pack_info
     ignore_errors: true
-
-  - debug:
-      msg: "{{ server_pack_url }}"
-
 
   - name: Download latest ServerPack
     ansible.builtin.get_url:
-      url: "{{ server_pack_url.json.data.downloadUrl | regex_replace(' ', '%20') }}"
-      dest: "{{ minecraft_server }}"
-      checksum: "md5:{{ server_pack_url.json.data.hashes[1].value }}"
+      url: "{{ server_pack_info.json.data.downloadUrl | regex_replace(' ', '%20') }}"
+      dest: "{{ minecraft_tmp }}"
+      checksum: "md5:{{ server_pack_info.json.data.hashes[1].value }}"
+    ignore_errors: true
+
+  - name: Download latest ModPack 1
+    ansible.builtin.get_url:
+      url: "{{ curseforge_project_info.json.data[0].downloadUrl | regex_replace(' ', '%20') }}"
+      dest: "{{ minecraft_tmp }}"
+      checksum: "md5:{{ curseforge_project_info.json.data[0].hashes[1].value }}"
+    ignore_errors: true
+
+  - name: Download latest ModPack 2
+    ansible.builtin.get_url:
+      url: "{{ curseforge_project_info.json.data[1].downloadUrl | regex_replace(' ', '%20') }}"
+      dest: "{{ minecraft_tmp }}"
+      checksum: "md5:{{ curseforge_project_info.json.data[1].hashes[1].value }}"
     ignore_errors: true
