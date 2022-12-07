@@ -32,7 +32,24 @@
 
   - name: Download latest ModPack 2
     ansible.builtin.get_url:
-      url: "{{ curseforge_project.json.data[1].downloadUrl | urlencode }}"
+      url: "{{ curseforge_project.json.data[1].downloadUrl | regex_replace(' ', '%20') }}"
       dest: "{{ minecraft_server }}"
       checksum: "md5:{{ curseforge_project.json.data[1].hashes[1].value }}"
+    ignore_errors: true
+
+  - name: Get server pack url
+    ansible.builtin.uri:
+      url: "https://api.curseforge.com/v1/mods/{{ project_id }}/files/{{ server_pack }}"
+      method: "GET"
+      headers:
+        Content-Type: "application/json"
+        x-api-key: "{{ curseforge_api_key }}"
+    register: server_pack_url
+    ignore_errors: true
+
+  - name: Download latest ServerPack
+    ansible.builtin.get_url:
+      url: "{{ server_pack_url.json.data.downloadUrl | regex_replace(' ', '%20') }}"
+      dest: "{{ minecraft_server }}"
+      checksum: "md5:{{ curseforge_project.json.data.hashes[1].value }}"
     ignore_errors: true
