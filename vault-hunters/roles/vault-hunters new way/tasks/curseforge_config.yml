@@ -32,12 +32,12 @@
 
   - name: Extract latest ServerPack
     ansible.builtin.unarchive:
-      src: "{{ minecraft_tmp }}/{{ server_pack_info.json.data.fileName | regex_replace(' ', '+') }}"
+      src: "{{ minecraft_tmp }}/{{ server_pack_info.json.data.fileName | regex_replace(' ', '%20') }}"
       dest: "{{ minecraft_server }}"
 
   - name: Create latest ModPack 1 directory
     ansible.builtin.file:
-      path: "{{ minecraft_tmp }}/modpack1"
+      path: "{{ minecraft_tmp }}/modpack"
       state: directory
 
   - name: Download latest ModPack 1
@@ -49,30 +49,14 @@
   - name: Extract latest ModPack 1
     ansible.builtin.unarchive:
       src: "{{ minecraft_tmp }}/{{ curseforge_project_info.json.data[0].fileName | regex_replace(' ', '%20') }}"
-      dest: "{{ minecraft_tmp }}/modpack1"
+      dest: "{{ minecraft_tmp }}/modpack"
 
   - name: Copy necessary ModPack directories with synchronize
     ansible.posix.synchronize:
-      src: "{{ minecraft_tmp }}/modpack1/{{ item }}"
+      src: "{{ minecraft_tmp }}/modpack/{{ item }}"
       dest: "{{ minecraft_server }}"
     loop:
       - "overrides/config"
       - "overrides/defaultconfigs"
       - "overrides/patchouli_books"
       - "overrides/scripts"
-
-  - name: Create latest ModPack 2 directory
-    ansible.builtin.file:
-      path: "{{ minecraft_tmp }}/modpack2"
-      state: directory
-
-  - name: Download latest ModPack 2
-    ansible.builtin.get_url:
-      url: "{{ curseforge_project_info.json.data[1].downloadUrl | regex_replace(' ', '%20') }}"
-      dest: "{{ minecraft_tmp }}"
-      checksum: "md5:{{ curseforge_project_info.json.data[1].hashes[1].value }}"
-
-  - name: Extract latest ModPack 2
-    ansible.builtin.unarchive:
-      src: "{{ minecraft_tmp }}/{{ curseforge_project_info.json.data[1].fileName | regex_replace(' ', '%20') }}"
-      dest: "{{ minecraft_tmp }}/modpack2"
