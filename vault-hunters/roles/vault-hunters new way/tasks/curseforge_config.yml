@@ -27,11 +27,8 @@
   - name: Download latest ServerPack
     ansible.builtin.get_url:
       url: "{{ server_pack_info.json.data.downloadUrl | regex_replace(' ', '%20') }}"
-      dest: "{{ minecraft_tmp }}/serverpack.zip"
+      dest: "{{ minecraft_tmp }}"
       checksum: "md5:{{ server_pack_info.json.data.hashes[1].value }}"
-
-  - debug:
-      msg: "{{ minecraft_tmp }}/{{ server_pack_info.json.data.fileName | regex_replace(' ', '+') }}"
 
   - name: Extract latest ServerPack
     ansible.builtin.unarchive:
@@ -51,7 +48,7 @@
 
   - name: Extract latest ModPack 1
     ansible.builtin.unarchive:
-      src: "{{ minecraft_tmp }}/{{ curseforge_project_info.json.data[0].fileName | regex_replace(' ', '%20') }}"
+      src: "{{ minecraft_tmp }}/{{ curseforge_project_info.json.data[0].fileName | regex_replace(' ', '+') }}"
       dest: "{{ minecraft_tmp }}/modpack"
 
   - name: Copy necessary ModPack directories with synchronize
