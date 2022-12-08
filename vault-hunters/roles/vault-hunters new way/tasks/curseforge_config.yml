@@ -27,12 +27,15 @@
   - name: Download latest ServerPack
     ansible.builtin.get_url:
       url: "{{ server_pack_info.json.data.downloadUrl | regex_replace(' ', '%20') }}"
-      dest: "{{ minecraft_tmp }}"
+      dest: "{{ minecraft_tmp }}/serverpack.zip"
       checksum: "md5:{{ server_pack_info.json.data.hashes[1].value }}"
+
+  - debug:
+      msg: "{{ minecraft_tmp }}/{{ server_pack_info.json.data.fileName | regex_replace(' ', '+') }}"
 
   - name: Extract latest ServerPack
     ansible.builtin.unarchive:
-      src: "{{ minecraft_tmp }}/{{ server_pack_info.json.data.fileName | regex_replace(' ', '%20') }}"
+      src: "{{ minecraft_tmp }}/{{ server_pack_info.json.data.fileName | regex_replace(' ', '+') }}"
       dest: "{{ minecraft_server }}"
 
   - name: Create latest ModPack 1 directory
