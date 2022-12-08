@@ -32,7 +32,7 @@
 
   - name: Extract latest ServerPack
     ansible.builtin.unarchive:
-      src: "{{ minecraft_tmp }}/{{ server_pack_info.json.data.fileName | regex_replace(' ', '%20') }}"
+      src: "{{ minecraft_tmp }}/{{ server_pack_info.json.data.fileName }}"
       dest: "{{ minecraft_server }}"
 
   - name: Create latest ModPack 1 directory
