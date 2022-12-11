@@ -1,21 +1,21 @@
 ---
 
-  - name: Get curseforge project info
+  - name: Get project files from curseforge
     ansible.builtin.uri:
       url: "https://api.curseforge.com/v1/mods/{{ project_id }}/files"
       method: "GET"
       headers:
         Content-Type: "application/json"
         x-api-key: "{{ curseforge_api_key }}"
-    register: curseforge_project_info
+    register: curseforge_project_files
 
-  - name: Get curseforge ServerPack file id
+  - name: Get latest server pack file_id
     ansible.builtin.set_fact:
-      server_pack_id: "{{ curseforge_project_info.json | json_query(query) }}"
+      server_pack_id: "{{ curseforge_project_files.json | json_query(query) }}"
     vars:
       query: "data[?serverPackFileId].serverPackFileId | [0]"
 
-  - name: Get curseforge ServerPack info
+  - name: Get latest server pack 
     ansible.builtin.uri:
       url: "https://api.curseforge.com/v1/mods/{{ project_id }}/files/{{ server_pack_id }}"
       method: "GET"
@@ -24,13 +24,13 @@
         x-api-key: "{{ curseforge_api_key }}"
     register: server_pack_info
 
-  - name: Download latest ServerPack
+  - name: Download latest server pack from curseforge to {{ minecraft_tmp }}
     ansible.builtin.get_url:
       url: "{{ server_pack_info.json.data.downloadUrl | regex_replace(' ', '%20') }}"
       dest: "{{ minecraft_tmp }}"
       checksum: "md5:{{ server_pack_info.json.data.hashes[1].value }}"
 
-  - name: Extract latest ServerPack
+  - name: Extract latest server pack to {{ minecraft_server }}
     ansible.builtin.unarchive:
       src: "{{ minecraft_tmp }}/{{ server_pack_info.json.data.fileName | regex_replace(' ', '+') }}"
       dest: "{{ minecraft_server }}"
@@ -39,24 +39,25 @@
     ansible.builtin.file:
       path: "{{ minecraft_tmp }}/modpack"
       state: directory
+  - block:
+    - name: Download latest ModPack 1
+      ansible.builtin.get_url:
+        url: "{{ curseforge_project_files.json.data[0].downloadUrl | regex_replace(' ', '%20') }}"
+        dest: "{{ minecraft_tmp }}"
+        checksum: "md5:{{ curseforge_project_files.json.data[0].hashes[1].value }}"
 
-  - name: Download latest ModPack 1
-    ansible.builtin.get_url:
-      url: "{{ curseforge_project_info.json.data[0].downloadUrl | regex_replace(' ', '%20') }}"
-      dest: "{{ minecraft_tmp }}"
-      checksum: "md5:{{ curseforge_project_info.json.data[0].hashes[1].value }}"
+    - name: Extract latest ModPack 1
+      ansible.builtin.unarchive:
+        src: "{{ minecraft_tmp }}/{{ curseforge_project_files.json.data[0].fileName | regex_replace(' ', '+') }}"
+        dest: "{{ minecraft_tmp }}/modpack"
 
-  - name: Extract latest ModPack 1
-    ansible.builtin.unarchive:
-      src: "{{ minecraft_tmp }}/{{ curseforge_project_info.json.data[0].fileName | regex_replace(' ', '+') }}"
-      dest: "{{ minecraft_tmp }}/modpack"
-
-  - name: Copy necessary ModPack directories with synchronize
-    ansible.posix.synchronize:
-      src: "{{ minecraft_tmp }}/modpack/{{ item }}"
-      dest: "{{ minecraft_server }}"
-    loop:
-      - "overrides/config"
-      - "overrides/defaultconfigs"
-      - "overrides/patchouli_books"
-      - "overrides/scripts"
+    - name: Copy necessary ModPack directories with synchronize
+      ansible.posix.synchronize:
+        src: "{{ minecraft_tmp }}/modpack/{{ item }}"
+        dest: "{{ minecraft_server }}"
+      loop:
+        - "overrides/config"
+        - "overrides/defaultconfigs"
+        - "overrides/patchouli_books"
+        - "overrides/scripts"
+    when: false
