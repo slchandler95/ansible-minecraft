@@ -1,0 +1,7 @@
+# ModPack variables and ModPack url: https://www.curseforge.com/minecraft/modpacks/vault-hunters-1-18-2/files
+pack_name: "Vault Hunters 3rd Edition"
+pack_url: "https://mediafilez.forgecdn.net/files/4231/284/Vault+Hunters+3rd+Edition-update-4.1.zip"
+pack_version: "4.1"
+pack_checksum: "md5:ea2532bfda6e3c11eb641fc91cd03beb"
+pack_manifest: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}/manifest.json"
+manifest: "{{ lookup('file', pack_manifest) | from_json }}"
