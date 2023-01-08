@@ -1,22 +1,15 @@
 ---
 
 # Curseforge API key: https://docs.curseforge.com/#getting-started
-#curseforge_api_key: "$2a$10$uVxDr1D3KcmntzxeMsm37OWKMbAQ.swm9TnsgeW3fUvwE/rySuifm"
-
 curseforge_api_key: "$2a$10$bL4bIL5pUWqfcO7KQtnMReakwtfHbNKh6v1uTpKlzhwoueEJQnPnm"
+
+# ModPack variables: https://www.curseforge.com/minecraft/modpacks/vault-hunters-1-18-2/files
+project_id: "711537"
 
 # Forge variables and Forge url: https://files.minecraftforge.net/net/minecraftforge/forge/
 minecraft_version: "1.18.2"
 forge_version: "40.1.61"
 forge_checksum: "md5:3d46421a908b4c3f3e990c2c4410b045"
-
-# ModPack variables and ModPack url: https://www.curseforge.com/minecraft/modpacks/vault-hunters-1-18-2/files
-pack_name: "Vault Hunters 3rd Edition"
-pack_url: "https://mediafilez.forgecdn.net/files/4134/91/Vault+Hunters+3rd+Edition-alpha-0.0.2.zip"
-pack_version: "alpha-0.0.2"
-pack_checksum: "md5:348d35343a3631793776b926be697b3b"
-pack_manifest: "{{ minecraft_tmp }}/{{ pack_name }}-{{ pack_version }}/manifest.json"
-manifest: "{{ lookup('file', pack_manifest) | from_json }}"
 
 # Java flags
 java_Xms: "12G"

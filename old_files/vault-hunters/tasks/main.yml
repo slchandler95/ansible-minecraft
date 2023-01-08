@@ -2,12 +2,16 @@
 
 - include_vars: server.properties.yml
 - include_vars: whitelist.json.yml
+  
+- name: Include minecraft config tasks
+  include_tasks: minecraft_config.yml
 
 - name: Include forge config tasks
   include_tasks: forge_config.yml
 
-- name: Include curseforge config tasks
-  include_tasks: curseforge_config.yml
+- name: Include mod config tasks
+  include_tasks: mod_config.yml
+  loop: "{{ manifest.files }}"
 
 - name: Include server config tasks
   include_tasks: server_config.yml

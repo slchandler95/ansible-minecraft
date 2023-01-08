@@ -3,6 +3,6 @@
 # Minecraft directories
 minecraft_base: /opt/minecraft
 minecraft_backups: /opt/minecraft/backups
-minecraft_scripts: /opt/minecraft/scripts
 minecraft_server: /opt/minecraft/server
+minecraft_scripts: /opt/minecraft/scripts
 minecraft_tmp: /opt/minecraft/tmp

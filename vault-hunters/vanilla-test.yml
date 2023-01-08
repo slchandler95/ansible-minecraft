@@ -1,6 +1,6 @@
 ---
 
-- name: Vault Hunters testing
+- name: Install vanilla minecraft server
 
   become: yes
   become_method: sudo
@@ -9,4 +9,6 @@
   hosts: localhost
 
   roles:
+    - role: update
+    - role: misc
     - role: vanilla-minecraft

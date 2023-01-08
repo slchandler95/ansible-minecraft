@@ -1,3 +1,5 @@
+---
+  
   - block:
     - name: Create latest ModPack directory
       ansible.builtin.file:
@@ -28,12 +30,12 @@
   
 
 
-- name: Define minecraft_version
-  ansible.builtin.set_fact:
-    minecraft_version: "{{ manifest.minecraft.version }}"
-  when: minecraft_version is not defined
+  - name: Define minecraft_version
+    ansible.builtin.set_fact:
+      minecraft_version: "{{ manifest.minecraft.version }}"
+    when: minecraft_version is not defined
 
-- name: Define forge_version
-  ansible.builtin.set_fact:
-    forge_version: "{{ manifest.minecraft.modLoaders.id }}"
-  when: forge_version is not defined
+  - name: Define forge_version
+    ansible.builtin.set_fact:
+      forge_version: "{{ manifest.minecraft.modLoaders.id }}"
+    when: forge_version is not defined

@@ -1,12 +1,15 @@
 ---
 
-- name: Include OS-specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
 
-- name: Define packages to install
-  ansible.builtin.set_fact:
-    packages: "{{ __packages | list }}"
-  when: packages is not defined
+- name: Update all packages
+  ansible.builtin.apt:
+    name: "*"
+    state: latest
 
-- name: Include OS-specific tasks
-  include_tasks: "{{ ansible_os_family }}.yml"
+- name: Install required packages
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+    state: latest

@@ -1,6 +1,6 @@
 ---
 
-- name: Install Vault Hunters minecraft server
+- name: Install vault hunters minecraft server
 
   become: yes
   become_method: sudo
