@@ -42,8 +42,8 @@
   ansible.builtin.copy:
     content: |
       #!/bin/sh
-      /usr/bin/tmux new-session -s minecraft -d
-      tmux send-keys -t minecraft "./opt/minecraft/server/run.sh" ENTER
+      /usr/bin/tmux new-session -s minecraft -c "/opt/minecraft/server" -d
+      tmux send-keys -t minecraft "/opt/minecraft/server/run.sh" ENTER
     dest: "{{ minecraft_scripts }}/start_server.sh"
     mode: "a+x"
     owner: minecraft
@@ -54,8 +54,9 @@
     content: |
       #!/bin/sh
       /usr/bin/tmux send-keys -t minecraft /save-all ENTER
+      sleep 15
       /usr/bin/tmux send-keys -t minecraft /stop ENTER
-      echo "Killing minecraft session"
+      sleep 15
       /usr/bin/tmux kill-session -t minecraft
     dest: "{{ minecraft_scripts }}/stop_server.sh"
     mode: "a+x"
@@ -66,18 +67,34 @@
   ansible.builtin.copy:
     content: |
       #!/bin/sh
-      printf "Starting backup..."
-      date +%D
       cd /opt/minecraft/server
       tmux send-keys -t minecraft /save-off ENTER
-      tar -czvf /opt/minecraft/backups/world-`date +%m%d%y_%H_%M_%S`.tar.gz world
+      tar -czvf /opt/minecraft/backups/world-`date +%m%d%y_%H_%M_%S`.tar.gz Vault-Hunters
       tmux send-keys -t minecraft /save-on ENTER
     dest: "{{ minecraft_scripts }}/backup_server.sh"
     mode: "a+x"
     owner: minecraft
     group: minecraft
 
+- name: Create cron job for backup_server.sh script
+  ansible.builtin.cron:
+    name: "Minecraft world backup"
+    minute: "0"
+    hour: "4"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: "/opt/minecraft/scripts/backup_server.sh >> /opt/minecraft/backups/backup.log 2>&1"
+    user: minecraft
+    state: present
+
 - name: Create minecraft systemd service file
   ansible.builtin.template:
     src: "minecraft.service.j2"
     dest: "/lib/systemd/system/minecraft.service"
+
+- name: Start minecraft.service
+  ansible.builtin.systemd:
+    name: minecraft.service
+    enabled: true
+    state: started
