@@ -93,8 +93,8 @@
     src: "minecraft.service.j2"
     dest: "/lib/systemd/system/minecraft.service"
 
-- name: Start minecraft.service
-  ansible.builtin.systemd:
-    name: minecraft.service
-    enabled: true
-    state: started
+#- name: Start minecraft.service
+#  ansible.builtin.systemd:
+#    name: minecraft.service
+#    enabled: true
+#    state: started
