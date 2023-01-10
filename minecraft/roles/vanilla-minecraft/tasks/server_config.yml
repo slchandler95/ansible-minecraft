@@ -12,7 +12,7 @@
     content: |
       #!/bin/sh
       /usr/bin/tmux new-session -s minecraft -c "/opt/minecraft/server" -d
-      tmux send-keys -t minecraft "/usr/bin/java -Xms{{ java_Xms }} -Xmx{{ java_Xmx }} {{ java_flags }} -jar minecraft_server.{{ minecraft_version }}.jar nogui" ENTER
+      tmux send-keys -t minecraft "/usr/bin/java -Xms{{ java_Xms }} -Xmx{{ java_Xmx }} {{ java_flags }} -jar minecraft_server-{{ minecraft_version }}.jar nogui" ENTER
     dest: "{{ minecraft_scripts }}/start_server.sh"
     mode: "a+x"
     owner: minecraft
