@@ -59,3 +59,10 @@
       checksum: "md5:{{ client_pack_info.json.data.hashes[1].value }}"
       owner: minecraft
       group: minecraft
+
+  - name: Extract latest client pack to {{ minecraft_tmp }}
+    ansible.builtin.unarchive:
+      src: "{{ minecraft_tmp }}/{{ client_pack_info.json.data.fileName | regex_replace(' ', '+') }}"
+      dest: "{{ minecraft_tmp }}"
+      owner: minecraft
+      group: minecraft

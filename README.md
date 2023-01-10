@@ -28,10 +28,9 @@ at minimum the following 2 files need to be edited:\
 from the ansible-minecraft directory run the following command:\
 `ansible-playbook vault-hunters.yml`
 
-## copy defaultconfigs folder from tmp directory
+## latest client pack is extracted to /opt/minecraft/tmp in case any files need to copied if anything was missing from server pack like defaultconfigs
 
-`sudo unzip /opt/minecraft/tmp/Vault+Hunters+3rd+Edition-update-4.1.zip -d /opt/minecraft/tmp/client`\
-`sudo cp -r /opt/minecraft/tmp/client/overrides/defaultconfigs /opt/minecraft/server`
+`sudo cp -r /opt/minecraft/tmp/<path/to/folder/to/be/copied> /opt/minecraft/server`
 
 ## enable/start/stop minecraft service with the following commands
 
