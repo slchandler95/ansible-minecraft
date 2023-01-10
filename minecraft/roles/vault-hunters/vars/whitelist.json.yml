@@ -2,6 +2,6 @@
 
 whitelist:
   - name: "user.name"
-    uuid: "user.guid"
+    uuid: "user.uuid"
   - name: "user.name"
-    uuid: "user.guid"
+    uuid: "user.uuid"
