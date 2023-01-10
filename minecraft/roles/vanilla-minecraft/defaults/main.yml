@@ -1,0 +1,14 @@
+---
+
+# Minecraft version manifest url
+minecraft_version_manifest_url: "https://launchermeta.mojang.com/mc/game/version_manifest.json"
+
+# If you want the latest version of minecraft, set minecraft_latest: true and comment out line 9.
+minecraft_latest: true
+# If you want a specific version, set minecraft_latest: false, uncomment line 9 and set the version.
+#minecraft_version: "1.18.2"
+
+# Java flags
+java_Xms: "1G"
+java_Xmx: "4G"
+java_flags: "-XX:+UseG1GC -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M"

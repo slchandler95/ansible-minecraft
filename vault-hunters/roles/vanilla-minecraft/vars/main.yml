@@ -1,6 +1,0 @@
----
-
-# True to download latest release version of Minecraft, False to download specific version of Minecraft
-minecraft_latest: true
-# Set specific version of Minecraft you want to download
-#minecraft_version:

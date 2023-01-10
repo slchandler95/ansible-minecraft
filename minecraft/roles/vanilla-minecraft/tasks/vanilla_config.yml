@@ -1,8 +1,5 @@
 ---
 
-- name: Include any variables
-  include_vars: main.yml
-
 - name: Get minecraft version manifest
   ansible.builtin.uri:
     url: "{{ minecraft_version_manifest_url }}"
@@ -26,7 +23,7 @@
     body_format: json
   register: minecraft_json
 
-- name: Download minecraft_server.{{ minecraft_version }}.jar 
+- name: Download minecraft to "{{ minecraft_server }}/minecraft_server-{{ minecraft_version }}.jar"
   ansible.builtin.get_url:
     url: "{{ minecraft_json.json.downloads.server.url }}"
     dest: "{{ minecraft_server }}/minecraft_server-{{ minecraft_version }}.jar"

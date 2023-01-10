@@ -1,7 +1,9 @@
 ---
 
-- include_vars: server.properties.yml
-- include_vars: whitelist.json.yml
+- name: Include any variables files
+  include_vars:
+    - server.properties.yml
+    - whitelist.json.yml
 
 - name: Include forge config tasks
   include_tasks: forge_config.yml

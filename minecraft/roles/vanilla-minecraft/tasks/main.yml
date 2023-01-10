@@ -1,0 +1,7 @@
+---
+
+- name: Include vanilla config tasks
+  include_tasks: vanilla_config.yml
+
+- name: Include server config tasks
+  include_tasks: server_config.yml
