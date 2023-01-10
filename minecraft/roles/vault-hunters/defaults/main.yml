@@ -1,6 +1,6 @@
 ---
 
-# Request curseforge API key: https://docs.curseforge.com/#getting-started. If you can't get one directly from curseforge this link has details to find one: https://git.sakamoto.pl/domi/curseme/-/blob/meow/getToken.sh
+# Request curseforge API key here: https://docs.curseforge.com/#getting-started. If you can't get one directly from curseforge this link has details to find one: https://git.sakamoto.pl/domi/curseme/-/blob/meow/getToken.sh.
 curseforge_api_key: ""
 
 # ModPack variables: https://www.curseforge.com/minecraft/modpacks/vault-hunters-1-18-2/files
