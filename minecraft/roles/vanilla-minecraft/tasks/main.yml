@@ -1,7 +1,7 @@
 ---
 
 - name: Include vanilla config tasks
-  include_tasks: vanilla_config.yml
+  ansible.builtin.include_tasks: vanilla_config.yml
 
 - name: Include server config tasks
-  include_tasks: server_config.yml
+  ansible.builtin.include_tasks: server_config.yml
