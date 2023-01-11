@@ -9,4 +9,6 @@
   hosts: localhost
 
   roles:
+    - role: update
+    - role: misc
     - role: update-forge
