@@ -1,0 +1,13 @@
+---
+
+- name: Include forge config tasks
+  ansible.builtin.include_tasks:
+    file: forge_config.yml
+
+- name: Include curseforge config tasks
+  ansible.builtin.include_tasks:
+    file: curseforge_config.yml
+
+- name: Include server config tasks
+  ansible.builtin.include_tasks:
+    file: server_config.yml
