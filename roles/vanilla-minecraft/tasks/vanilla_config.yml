@@ -1,0 +1,30 @@
+---
+
+- name: Get minecraft version manifest
+  ansible.builtin.uri:
+    url: "{{ minecraft_version_manifest_url }}"
+    body_format: json
+  register: minecraft_version_manifest
+
+- name: Get minecraft latest release version
+  ansible.builtin.set_fact:
+    minecraft_version: "{{ minecraft_version_manifest.json.latest.release }}"
+  when: minecraft_latest
+
+- name: Get minecraft {{ minecraft_version }}.json url
+  ansible.builtin.set_fact:
+    minecraft_json_url: "{{ minecraft_version_manifest.json | json_query(query) }}"
+  vars:
+    query: "versions[?id=='{{ minecraft_version }}'].url | [0]"
+
+- name: Get minecraft {{ minecraft_version }}.json
+  ansible.builtin.uri:
+    url: "{{ minecraft_json_url }}"
+    body_format: json
+  register: minecraft_json
+
+- name: Download minecraft to "{{ minecraft_server }}/minecraft_server-{{ minecraft_version }}.jar"
+  ansible.builtin.get_url:
+    url: "{{ minecraft_json.json.downloads.server.url }}"
+    dest: "{{ minecraft_server }}/minecraft_server-{{ minecraft_version }}.jar"
+    checksum: "sha1:{{ minecraft_json.json.downloads.server.sha1 }}"

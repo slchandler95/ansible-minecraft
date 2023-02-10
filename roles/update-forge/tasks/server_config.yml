@@ -1,0 +1,18 @@
+---
+
+- name: Create user_jvm_args.txt from template
+  ansible.builtin.template:
+    src: "user_jvm_args.txt.j2"
+    dest: "{{ minecraft_server }}/user_jvm_args.txt"
+    owner: minecraft
+    group: minecraft
+
+- name: Create run.sh
+  ansible.builtin.copy:
+    content: |
+      #!/usr/bin/env sh
+      java @user_jvm_args.txt @libraries/net/minecraftforge/forge/{{ minecraft_version }}-{{ forge_version }}/unix_args.txt nogui "$@"
+    dest: "{{ minecraft_server }}/run.sh"
+    mode: "a+x"
+    owner: minecraft
+    group: minecraft

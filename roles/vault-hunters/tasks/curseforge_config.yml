@@ -1,0 +1,68 @@
+---
+
+  - name: Get project files from curseforge
+    ansible.builtin.uri:
+      url: "https://api.curseforge.com/v1/mods/{{ project_id }}/files"
+      method: "GET"
+      headers:
+        Content-Type: "application/json"
+        x-api-key: "{{ curseforge_api_key }}"
+    register: curseforge_project_files
+
+  - name: Get latest server pack file_id
+    ansible.builtin.set_fact:
+      server_pack_id: "{{ curseforge_project_files.json | json_query(query) }}"
+    vars:
+      query: "data[?serverPackFileId].serverPackFileId | [0]"
+
+  - name: Get latest server pack info
+    ansible.builtin.uri:
+      url: "https://api.curseforge.com/v1/mods/{{ project_id }}/files/{{ server_pack_id }}"
+      method: "GET"
+      headers:
+        Content-Type: "application/json"
+        x-api-key: "{{ curseforge_api_key }}"
+    register: server_pack_info
+
+  - name: Get latest client pack file_id
+    ansible.builtin.set_fact:
+      client_pack_id: "{{ curseforge_project_files.json.data[0].id }}"
+
+  - name: Get latest client pack info
+    ansible.builtin.uri:
+      url: "https://api.curseforge.com/v1/mods/{{ project_id }}/files/{{ client_pack_id }}"
+      method: "GET"
+      headers:
+        Content-Type: "application/json"
+        x-api-key: "{{ curseforge_api_key }}"
+    register: client_pack_info
+
+  - name: Download latest server pack to {{ minecraft_tmp }}
+    ansible.builtin.get_url:
+      url: "{{ server_pack_info.json.data.downloadUrl | regex_replace(' ', '%20') }}"
+      dest: "{{ minecraft_tmp }}"
+      checksum: "md5:{{ server_pack_info.json.data.hashes[1].value }}"
+      owner: minecraft
+      group: minecraft
+
+  - name: Extract latest server pack to {{ minecraft_server }}
+    ansible.builtin.unarchive:
+      src: "{{ minecraft_tmp }}/{{ server_pack_info.json.data.fileName | regex_replace(' ', '+') }}"
+      dest: "{{ minecraft_server }}"
+      owner: minecraft
+      group: minecraft
+
+  - name: Download latest client pack to {{ minecraft_tmp }}
+    ansible.builtin.get_url:
+      url: "{{ client_pack_info.json.data.downloadUrl | regex_replace(' ', '%20') }}"
+      dest: "{{ minecraft_tmp }}"
+      checksum: "md5:{{ client_pack_info.json.data.hashes[1].value }}"
+      owner: minecraft
+      group: minecraft
+
+  - name: Extract latest client pack to {{ minecraft_tmp }}
+    ansible.builtin.unarchive:
+      src: "{{ minecraft_tmp }}/{{ client_pack_info.json.data.fileName | regex_replace(' ', '+') }}"
+      dest: "{{ minecraft_tmp }}"
+      owner: minecraft
+      group: minecraft

@@ -1,0 +1,28 @@
+---
+
+## todo
+
+## stop minecraft.service
+
+## wait 60 seconds
+
+## backup /opt/minecraft/server folder to /opt/minecraft/backups
+
+## remove forge files/folders
+  ## forge installer
+  ## forge installer log
+  ## run.bat
+  ## run.sh
+  ## user_jvm_args.txt
+  ## libraries
+
+## remove modpack files/folders
+  ## config
+  ## defaultconfigs
+  ## mods
+  ## packmenu
+  ## patchouli_books
+  ## scripts
+  ## patchouli_data.json
+
+## copy server pack files/folders to minecraft_server directory

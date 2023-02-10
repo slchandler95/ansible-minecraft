@@ -1,0 +1,15 @@
+---
+
+- name: Download forge installer
+  ansible.builtin.get_url:
+    url: "https://maven.minecraftforge.net/net/minecraftforge/forge/{{ minecraft_version }}-{{ forge_version }}/forge-{{ minecraft_version }}-{{ forge_version }}-installer.jar"
+    dest: "{{ minecraft_server }}"
+    checksum: "{{ forge_checksum }}"
+    owner: minecraft
+    group: minecraft
+
+- name: Install forge server
+  ansible.builtin.command:
+    cmd: "java -jar forge-{{ minecraft_version }}-{{ forge_version }}-installer.jar --installServer"
+    chdir: "{{ minecraft_server }}"
+    creates: "forge-{{ minecraft_version }}-{{ forge_version }}-installer.jar.log"

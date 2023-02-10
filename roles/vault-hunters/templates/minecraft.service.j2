@@ -1,0 +1,13 @@
+[Unit]
+Description=Minecraft Server
+After=network.target
+
+[Service]
+Type=forking
+User=minecraft
+WorkingDirectory=/opt/minecraft/scripts
+ExecStart=/opt/minecraft/scripts/start_server.sh
+ExecStop=/opt/minecraft/scripts/stop_server.sh
+
+[Install]
+WantedBy=multi-user.target

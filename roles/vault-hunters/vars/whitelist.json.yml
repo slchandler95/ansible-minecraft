@@ -1,0 +1,7 @@
+---
+
+whitelist:
+  - name: "user.name"
+    uuid: "user.uuid"
+  - name: "user.name"
+    uuid: "user.uuid"

@@ -1,0 +1,17 @@
+---
+
+# Request curseforge API key here: https://docs.curseforge.com/#getting-started. If you can't get one directly from curseforge this link has details to find one: https://git.sakamoto.pl/domi/curseme/-/blob/meow/getToken.sh.
+curseforge_api_key: ""
+
+# ModPack variables: https://www.curseforge.com/minecraft/modpacks/vault-hunters-1-18-2/files
+project_id: "711537"
+
+# Forge variables and Forge url: https://files.minecraftforge.net/net/minecraftforge/forge/
+minecraft_version: "1.18.2"
+forge_version: "40.1.93"
+forge_checksum: "md5:2b0191b109152c1cb49519d9ac4b57d9"
+
+# Java flags
+java_Xms: "12G"
+java_Xmx: "16G"
+java_flags: "-XX:+UseG1GC -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M"

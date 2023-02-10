@@ -1,0 +1,21 @@
+---
+
+- name: Include server.properties variables
+  ansible.builtin.include_vars:
+    file: server.properties.yml
+
+- name: Include whitelist.json variables
+  ansible.builtin.include_vars:
+    file: whitelist.json.yml
+
+- name: Include forge config tasks
+  ansible.builtin.include_tasks:
+    file: forge_config.yml
+
+- name: Include curseforge config tasks
+  ansible.builtin.include_tasks:
+    file: curseforge_config.yml
+
+- name: Include server config tasks
+  ansible.builtin.include_tasks:
+    file: server_config.yml
