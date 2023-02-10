@@ -1,0 +1,14 @@
+---
+
+- name: Install vanilla minecraft server
+
+  become: yes
+  become_method: sudo
+  become_user: root
+
+  hosts: localhost
+
+  roles:
+    - role: update
+    - role: misc
+    - role: vanilla-minecraft
